@@ -1,4 +1,11 @@
 spring:
+  web:
+    error:
+      include-message: always
+      include-binding-errors: always
+      include-stacktrace: never
+      include-exception: false
+
   application:
     name: franchise-api
   
@@ -22,12 +29,12 @@ spring:
       ddl-auto: none
     properties:
       hibernate:
-        format_sql: true
-        use_sql_comments: true
+        "[format_sql]": true
+        "[use_sql_comments]": true
         jdbc:
-          batch_size: 20
-        order_inserts: true
-        order_updates: true
+          "[batch_size]": 20
+        "[order_inserts]": true
+        "[order_updates]": true
     show-sql: false
     open-in-view: false
   
@@ -60,11 +67,6 @@ server:
   port: ${SERVER_PORT:8080}
   compression:
     enabled: true
-  error:
-    include-message: always
-    include-binding-errors: always
-    include-stacktrace: never
-    include-exception: false
 
 management:
   endpoints:
@@ -93,10 +95,10 @@ springdoc:
 logging:
   level:
     root: INFO
-    com.accenture.franchise: DEBUG
-    org.springframework.web: INFO
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    "[com.accenture.franchise]": DEBUG
+    "[org.springframework.web]": INFO
+    "[org.hibernate.SQL]": DEBUG
+    "[org.hibernate.type.descriptor.sql.BasicBinder]": TRACE
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

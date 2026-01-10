@@ -3,8 +3,6 @@ package com.accenture.franchise.infrastructure.adapter.output.persistence.entity
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
-
 /**
  * Entidad JPA para Producto
  */

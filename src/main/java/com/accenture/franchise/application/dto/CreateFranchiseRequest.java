@@ -11,6 +11,6 @@ import jakarta.validation.constraints.Size;
 public record CreateFranchiseRequest(
     @NotBlank(message = "Name is required")
     @Size(min = 1, max = 100, message = "Name must be between 1 and 100 characters")
-    @Schema(description = "Nombre de la franquicia", example = "Franquicia ABC", required = true)
+    @Schema(description = "Nombre de la franquicia", example = "Franquicia ABC", requiredMode = Schema.RequiredMode.REQUIRED)
     String name
 ) {}

@@ -15,5 +15,5 @@ spring:
 
 logging:
   level:
-    com.accenture.franchise: INFO
-    org.springframework: WARN
+    "[com.accenture.franchise]": INFO
+    "[org.springframework]": WARN
