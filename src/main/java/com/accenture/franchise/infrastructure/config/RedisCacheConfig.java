@@ -1,5 +1,6 @@
 package com.accenture.franchise.infrastructure.config;
 
+import java.time.Duration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,33 +10,24 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
-import java.time.Duration;
-
-/**
- * Configuración de Redis Cache
- */
+/** Configuración de Redis para caché distribuido. */
 @Configuration
 @EnableCaching
 public class RedisCacheConfig {
-    
-    @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+
+  /** Configura el gestor de caché de Redis. */
+  @Bean
+  public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+    RedisCacheConfiguration config =
+        RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(Duration.ofMinutes(10))
             .disableCachingNullValues()
             .serializeKeysWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(
-                    RedisSerializer.string()
-                )
-            )
+                    RedisSerializer.string()))
             .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(
-                    RedisSerializer.json()
-                )
-            );
-        
-        return RedisCacheManager.builder(connectionFactory)
-            .cacheDefaults(config)
-            .build();
-    }
+                RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.json()));
+
+    return RedisCacheManager.builder(connectionFactory).cacheDefaults(config).build();
+  }
 }

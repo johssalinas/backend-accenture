@@ -1,15 +1,15 @@
 package com.accenture.franchise.domain.exception;
 
-/**
- * Excepción base para errores del dominio
- */
+/** Excepción base para errores del dominio. */
 public class DomainException extends RuntimeException {
-    
-    public DomainException(String message) {
-        super(message);
-    }
-    
-    public DomainException(String message, Throwable cause) {
-        super(message, cause);
-    }
+
+  /** Crea la excepción de dominio con un mensaje descriptivo. */
+  public DomainException(String message) {
+    super(message);
+  }
+
+  /** Crea la excepción de dominio con mensaje y causa original. */
+  public DomainException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }

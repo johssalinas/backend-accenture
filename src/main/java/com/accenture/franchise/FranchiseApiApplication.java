@@ -5,22 +5,24 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
 /**
- * Aplicación principal - Franchise Management API
- * API REST para gestión de franquicias, sucursales y productos
- * 
- * Tecnologías:
- * - Spring Boot 4 con Java 25
- * - PostgreSQL para persistencia
- * - Redis para caché
- * - Clean Architecture
- * - OpenAPI/Swagger para documentación
+ * Aplicación principal de la API REST para gestión de franquicias, sucursales y productos.
+ *
+ * <p>Tecnologías:
+ *
+ * <ul>
+ *   <li>Spring Boot 4 con Java 25
+ *   <li>PostgreSQL para persistencia
+ *   <li>Redis para caché
+ *   <li>Clean Architecture
+ *   <li>OpenAPI/Swagger para documentación
+ * </ul>
  */
 @SpringBootApplication
 @EnableCaching
 public class FranchiseApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FranchiseApiApplication.class, args);
-	}
-
+  /** Punto de entrada de la aplicación. */
+  public static void main(String[] args) {
+    SpringApplication.run(FranchiseApiApplication.class, args);
+  }
 }
