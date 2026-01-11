@@ -28,8 +28,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -41,13 +41,14 @@ import org.springframework.test.web.servlet.MockMvc;
  * cargar el contexto completo de Spring.
  */
 @WebMvcTest(FranchiseController.class)
-@AutoConfigureMockMvc
 @DisplayName("FranchiseController - Pruebas de Integración")
 class FranchiseControllerTest {
 
   @Autowired private MockMvc mockMvc;
 
-  @Autowired private ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper = new ObjectMapper();
+
+  @MockitoBean private CacheManager cacheManager;
 
   @MockitoBean private CreateFranchiseUseCase createFranchiseUseCase;
 
@@ -72,8 +73,7 @@ class FranchiseControllerTest {
       FranchiseResponse response =
           new FranchiseResponse(franchiseId, franchiseName, new ArrayList<>());
 
-      given(createFranchiseUseCase.execute(any(CreateFranchiseRequest.class)))
-          .willReturn(response);
+      given(createFranchiseUseCase.execute(any(CreateFranchiseRequest.class))).willReturn(response);
 
       // Act & Assert
       mockMvc
@@ -116,10 +116,7 @@ class FranchiseControllerTest {
     void shouldReturn400WhenRequestIsInvalid() throws Exception {
       // Act & Assert - Enviar request vacío
       mockMvc
-          .perform(
-              post("/api/v1/franchises")
-                  .contentType(MediaType.APPLICATION_JSON)
-                  .content("{}"))
+          .perform(post("/api/v1/franchises").contentType(MediaType.APPLICATION_JSON).content("{}"))
           .andExpect(status().isBadRequest());
     }
   }
@@ -191,7 +188,9 @@ class FranchiseControllerTest {
 
       FranchiseResponse response = new FranchiseResponse(franchiseId, newName, new ArrayList<>());
 
-      given(updateFranchiseNameUseCase.execute(eq(franchiseId), any(UpdateFranchiseNameRequest.class)))
+      given(
+              updateFranchiseNameUseCase.execute(
+                  eq(franchiseId), any(UpdateFranchiseNameRequest.class)))
           .willReturn(response);
 
       // Act & Assert
@@ -204,7 +203,8 @@ class FranchiseControllerTest {
           .andExpect(jsonPath("$.id").value(franchiseId.toString()))
           .andExpect(jsonPath("$.name").value(newName));
 
-      verify(updateFranchiseNameUseCase).execute(eq(franchiseId), any(UpdateFranchiseNameRequest.class));
+      verify(updateFranchiseNameUseCase)
+          .execute(eq(franchiseId), any(UpdateFranchiseNameRequest.class));
     }
 
     @Test
@@ -214,7 +214,9 @@ class FranchiseControllerTest {
       UUID nonExistentId = UUID.randomUUID();
       UpdateFranchiseNameRequest request = new UpdateFranchiseNameRequest("New Name");
 
-      given(updateFranchiseNameUseCase.execute(eq(nonExistentId), any(UpdateFranchiseNameRequest.class)))
+      given(
+              updateFranchiseNameUseCase.execute(
+                  eq(nonExistentId), any(UpdateFranchiseNameRequest.class)))
           .willThrow(new EntityNotFoundException("Franchise", nonExistentId));
 
       // Act & Assert
@@ -243,7 +245,8 @@ class FranchiseControllerTest {
   }
 
   @Nested
-  @DisplayName("GET /api/v1/franchises/{franchiseId}/top-stock-products - Productos con Mayor Stock")
+  @DisplayName(
+      "GET /api/v1/franchises/{franchiseId}/top-stock-products - Productos con Mayor Stock")
   class GetTopStockProductsTests {
 
     @Test
@@ -347,8 +350,7 @@ class FranchiseControllerTest {
 
       // Act & Assert
       mockMvc
-          .perform(
-              post("/api/v1/franchises").content(objectMapper.writeValueAsString(request)))
+          .perform(post("/api/v1/franchises").content(objectMapper.writeValueAsString(request)))
           .andExpect(status().isUnsupportedMediaType());
     }
 
@@ -359,11 +361,9 @@ class FranchiseControllerTest {
       CreateFranchiseRequest request = new CreateFranchiseRequest("Test");
 
       UUID franchiseId = UUID.randomUUID();
-      FranchiseResponse response =
-          new FranchiseResponse(franchiseId, "Test", new ArrayList<>());
+      FranchiseResponse response = new FranchiseResponse(franchiseId, "Test", new ArrayList<>());
 
-      given(createFranchiseUseCase.execute(any(CreateFranchiseRequest.class)))
-          .willReturn(response);
+      given(createFranchiseUseCase.execute(any(CreateFranchiseRequest.class))).willReturn(response);
 
       // Act & Assert
       mockMvc

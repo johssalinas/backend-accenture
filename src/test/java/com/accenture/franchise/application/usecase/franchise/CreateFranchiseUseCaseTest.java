@@ -16,7 +16,6 @@ import com.accenture.franchise.domain.model.Franchise;
 import com.accenture.franchise.domain.repository.FranchiseRepository;
 import java.util.ArrayList;
 import java.util.UUID;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -61,7 +60,11 @@ class CreateFranchiseUseCaseTest {
 
       UUID expectedId = UUID.randomUUID();
       Franchise savedFranchise =
-          Franchise.builder().id(expectedId).name(franchiseName).branches(new ArrayList<>()).build();
+          Franchise.builder()
+              .id(expectedId)
+              .name(franchiseName)
+              .branches(new ArrayList<>())
+              .build();
 
       FranchiseResponse expectedResponse =
           new FranchiseResponse(expectedId, franchiseName, new ArrayList<>());
@@ -93,7 +96,11 @@ class CreateFranchiseUseCaseTest {
 
       UUID expectedId = UUID.randomUUID();
       Franchise savedFranchise =
-          Franchise.builder().id(expectedId).name(franchiseName).branches(new ArrayList<>()).build();
+          Franchise.builder()
+              .id(expectedId)
+              .name(franchiseName)
+              .branches(new ArrayList<>())
+              .build();
 
       FranchiseResponse expectedResponse =
           new FranchiseResponse(expectedId, franchiseName, new ArrayList<>());
@@ -120,7 +127,11 @@ class CreateFranchiseUseCaseTest {
 
       UUID expectedId = UUID.randomUUID();
       Franchise savedFranchise =
-          Franchise.builder().id(expectedId).name(franchiseName).branches(new ArrayList<>()).build();
+          Franchise.builder()
+              .id(expectedId)
+              .name(franchiseName)
+              .branches(new ArrayList<>())
+              .build();
 
       FranchiseResponse expectedResponse =
           new FranchiseResponse(expectedId, franchiseName, new ArrayList<>());
@@ -194,7 +205,11 @@ class CreateFranchiseUseCaseTest {
 
       UUID expectedId = UUID.randomUUID();
       Franchise savedFranchise =
-          Franchise.builder().id(expectedId).name(franchiseName).branches(new ArrayList<>()).build();
+          Franchise.builder()
+              .id(expectedId)
+              .name(franchiseName)
+              .branches(new ArrayList<>())
+              .build();
 
       FranchiseResponse expectedResponse =
           new FranchiseResponse(expectedId, franchiseName, new ArrayList<>());

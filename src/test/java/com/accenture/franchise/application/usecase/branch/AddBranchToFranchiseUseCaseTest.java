@@ -3,7 +3,6 @@ package com.accenture.franchise.application.usecase.branch;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -51,7 +50,7 @@ class AddBranchToFranchiseUseCaseTest {
       UUID franchiseId = UUID.randomUUID();
       String branchName = "Sucursal Centro";
 
-      CreateBranchRequest request = new CreateBranchRequest(branchName, franchiseId);
+      CreateBranchRequest request = new CreateBranchRequest(franchiseId, branchName);
 
       UUID branchId = UUID.randomUUID();
       Branch savedBranch =
@@ -66,8 +65,7 @@ class AddBranchToFranchiseUseCaseTest {
           new BranchResponse(branchId, branchName, franchiseId, new ArrayList<>());
 
       given(franchiseRepository.existsById(franchiseId)).willReturn(true);
-      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId))
-          .willReturn(false);
+      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId)).willReturn(false);
       given(branchRepository.save(any(Branch.class))).willReturn(savedBranch);
       given(mapper.toBranchResponse(savedBranch)).willReturn(expectedResponse);
 
@@ -93,7 +91,7 @@ class AddBranchToFranchiseUseCaseTest {
       UUID franchiseId = UUID.randomUUID();
       String branchName = "Sucursal Norte";
 
-      CreateBranchRequest request = new CreateBranchRequest(branchName, franchiseId);
+      CreateBranchRequest request = new CreateBranchRequest(franchiseId, branchName);
 
       UUID branchId = UUID.randomUUID();
       Branch savedBranch =
@@ -108,8 +106,7 @@ class AddBranchToFranchiseUseCaseTest {
           new BranchResponse(branchId, branchName, franchiseId, new ArrayList<>());
 
       given(franchiseRepository.existsById(franchiseId)).willReturn(true);
-      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId))
-          .willReturn(false);
+      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId)).willReturn(false);
       given(branchRepository.save(any(Branch.class))).willReturn(savedBranch);
       given(mapper.toBranchResponse(savedBranch)).willReturn(expectedResponse);
 
@@ -128,7 +125,7 @@ class AddBranchToFranchiseUseCaseTest {
       UUID franchiseId = UUID.randomUUID();
       String branchName = "Sucursal Sur";
 
-      CreateBranchRequest request = new CreateBranchRequest(branchName, franchiseId);
+      CreateBranchRequest request = new CreateBranchRequest(franchiseId, branchName);
 
       Branch savedBranch =
           Branch.builder()
@@ -139,12 +136,10 @@ class AddBranchToFranchiseUseCaseTest {
               .build();
 
       BranchResponse expectedResponse =
-          new BranchResponse(
-              savedBranch.getId(), branchName, franchiseId, new ArrayList<>());
+          new BranchResponse(savedBranch.getId(), branchName, franchiseId, new ArrayList<>());
 
       given(franchiseRepository.existsById(franchiseId)).willReturn(true);
-      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId))
-          .willReturn(false);
+      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId)).willReturn(false);
       given(branchRepository.save(any(Branch.class))).willReturn(savedBranch);
       given(mapper.toBranchResponse(savedBranch)).willReturn(expectedResponse);
 
@@ -172,7 +167,7 @@ class AddBranchToFranchiseUseCaseTest {
       UUID nonExistentFranchiseId = UUID.randomUUID();
       String branchName = "Sucursal Test";
 
-      CreateBranchRequest request = new CreateBranchRequest(branchName, nonExistentFranchiseId);
+      CreateBranchRequest request = new CreateBranchRequest(nonExistentFranchiseId, branchName);
 
       given(franchiseRepository.existsById(nonExistentFranchiseId)).willReturn(false);
 
@@ -194,7 +189,7 @@ class AddBranchToFranchiseUseCaseTest {
       UUID franchiseId = UUID.randomUUID();
       String duplicateName = "Sucursal Duplicada";
 
-      CreateBranchRequest request = new CreateBranchRequest(duplicateName, franchiseId);
+      CreateBranchRequest request = new CreateBranchRequest(franchiseId, duplicateName);
 
       given(franchiseRepository.existsById(franchiseId)).willReturn(true);
       given(branchRepository.existsByNameAndFranchiseId(duplicateName, franchiseId))
@@ -218,7 +213,7 @@ class AddBranchToFranchiseUseCaseTest {
       UUID franchiseId = UUID.randomUUID();
       String branchName = "Test Branch";
 
-      CreateBranchRequest request = new CreateBranchRequest(branchName, franchiseId);
+      CreateBranchRequest request = new CreateBranchRequest(franchiseId, branchName);
 
       given(franchiseRepository.existsById(franchiseId)).willReturn(false);
 
@@ -242,7 +237,7 @@ class AddBranchToFranchiseUseCaseTest {
       UUID franchiseId = UUID.randomUUID();
       String branchName = "Test Branch";
 
-      CreateBranchRequest request = new CreateBranchRequest(branchName, franchiseId);
+      CreateBranchRequest request = new CreateBranchRequest(franchiseId, branchName);
 
       Branch savedBranch =
           Branch.builder()
@@ -253,12 +248,10 @@ class AddBranchToFranchiseUseCaseTest {
               .build();
 
       BranchResponse expectedResponse =
-          new BranchResponse(
-              savedBranch.getId(), branchName, franchiseId, new ArrayList<>());
+          new BranchResponse(savedBranch.getId(), branchName, franchiseId, new ArrayList<>());
 
       given(franchiseRepository.existsById(franchiseId)).willReturn(true);
-      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId))
-          .willReturn(false);
+      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId)).willReturn(false);
       given(branchRepository.save(any(Branch.class))).willReturn(savedBranch);
       given(mapper.toBranchResponse(savedBranch)).willReturn(expectedResponse);
 
@@ -266,8 +259,7 @@ class AddBranchToFranchiseUseCaseTest {
       addBranchToFranchiseUseCase.execute(request);
 
       // Assert
-      var inOrder =
-          org.mockito.Mockito.inOrder(franchiseRepository, branchRepository, mapper);
+      var inOrder = org.mockito.Mockito.inOrder(franchiseRepository, branchRepository, mapper);
       inOrder.verify(franchiseRepository).existsById(franchiseId);
       inOrder.verify(branchRepository).existsByNameAndFranchiseId(branchName, franchiseId);
       inOrder.verify(branchRepository).save(any(Branch.class));
@@ -281,7 +273,7 @@ class AddBranchToFranchiseUseCaseTest {
       UUID franchiseId = UUID.randomUUID();
       String branchName = "Test Branch";
 
-      CreateBranchRequest request = new CreateBranchRequest(branchName, franchiseId);
+      CreateBranchRequest request = new CreateBranchRequest(franchiseId, branchName);
 
       Branch savedBranch =
           Branch.builder()
@@ -292,12 +284,10 @@ class AddBranchToFranchiseUseCaseTest {
               .build();
 
       BranchResponse expectedResponse =
-          new BranchResponse(
-              savedBranch.getId(), branchName, franchiseId, new ArrayList<>());
+          new BranchResponse(savedBranch.getId(), branchName, franchiseId, new ArrayList<>());
 
       given(franchiseRepository.existsById(franchiseId)).willReturn(true);
-      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId))
-          .willReturn(false);
+      given(branchRepository.existsByNameAndFranchiseId(branchName, franchiseId)).willReturn(false);
       given(branchRepository.save(any(Branch.class))).willReturn(savedBranch);
       given(mapper.toBranchResponse(savedBranch)).willReturn(expectedResponse);
 
@@ -321,8 +311,8 @@ class AddBranchToFranchiseUseCaseTest {
       UUID franchiseId2 = UUID.randomUUID();
       String sameBranchName = "Sucursal Centro";
 
-      CreateBranchRequest request1 = new CreateBranchRequest(sameBranchName, franchiseId1);
-      CreateBranchRequest request2 = new CreateBranchRequest(sameBranchName, franchiseId2);
+      CreateBranchRequest request1 = new CreateBranchRequest(franchiseId1, sameBranchName);
+      CreateBranchRequest request2 = new CreateBranchRequest(franchiseId2, sameBranchName);
 
       Branch savedBranch1 =
           Branch.builder()
@@ -341,11 +331,9 @@ class AddBranchToFranchiseUseCaseTest {
               .build();
 
       BranchResponse response1 =
-          new BranchResponse(
-              savedBranch1.getId(), sameBranchName, franchiseId1, new ArrayList<>());
+          new BranchResponse(savedBranch1.getId(), sameBranchName, franchiseId1, new ArrayList<>());
       BranchResponse response2 =
-          new BranchResponse(
-              savedBranch2.getId(), sameBranchName, franchiseId2, new ArrayList<>());
+          new BranchResponse(savedBranch2.getId(), sameBranchName, franchiseId2, new ArrayList<>());
 
       // Primera franquicia
       given(franchiseRepository.existsById(franchiseId1)).willReturn(true);

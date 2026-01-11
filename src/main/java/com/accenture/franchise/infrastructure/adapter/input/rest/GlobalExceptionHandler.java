@@ -10,9 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /** Manejador global de excepciones. */
 @RestControllerAdvice
@@ -77,6 +79,40 @@ public class GlobalExceptionHandler {
     ProblemDetail problemDetail =
         ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
     problemDetail.setTitle("Invalid Request");
+    problemDetail.setProperty("timestamp", Instant.now());
+
+    return problemDetail;
+  }
+
+  /** Maneja excepciones de conversión de tipos en parámetros de método. */
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ProblemDetail handleMethodArgumentTypeMismatchException(
+      MethodArgumentTypeMismatchException ex) {
+    log.error("Type mismatch: {}", ex.getMessage());
+
+    String message =
+        String.format(
+            "Invalid value '%s' for parameter '%s'. Expected type: %s",
+            ex.getValue(), ex.getName(), ex.getRequiredType().getSimpleName());
+
+    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, message);
+    problemDetail.setTitle("Invalid Request Parameter");
+    problemDetail.setProperty("timestamp", Instant.now());
+
+    return problemDetail;
+  }
+
+  /** Maneja excepciones de tipo de contenido no soportado. */
+  @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+  public ProblemDetail handleHttpMediaTypeNotSupportedException(
+      HttpMediaTypeNotSupportedException ex) {
+    log.error("Unsupported media type: {}", ex.getMessage());
+
+    String message = "Content-Type header is required and must be 'application/json'";
+
+    ProblemDetail problemDetail =
+        ProblemDetail.forStatusAndDetail(HttpStatus.UNSUPPORTED_MEDIA_TYPE, message);
+    problemDetail.setTitle("Unsupported Media Type");
     problemDetail.setProperty("timestamp", Instant.now());
 
     return problemDetail;

@@ -163,8 +163,7 @@ class FranchiseTest {
 
     @BeforeEach
     void setUp() {
-      franchise =
-          Franchise.builder().id(UUID.randomUUID()).name("Original Name").build();
+      franchise = Franchise.builder().id(UUID.randomUUID()).name("Original Name").build();
     }
 
     @Test
@@ -301,8 +300,8 @@ class FranchiseTest {
 
       // Assert
       assertThat(result).hasSize(1);
-      assertThat(result.getFirst().getProductName()).isEqualTo("Product 2");
-      assertThat(result.getFirst().getStock()).isEqualTo(50);
+      assertThat(result.getFirst().productName()).isEqualTo("Product 2");
+      assertThat(result.getFirst().stock()).isEqualTo(50);
     }
   }
 
@@ -379,8 +378,7 @@ class FranchiseTest {
     @DisplayName("Debe manejar múltiples operaciones en secuencia")
     void shouldHandleMultipleOperationsInSequence() {
       // Arrange
-      Franchise franchise =
-          Franchise.builder().id(UUID.randomUUID()).name("Initial Name").build();
+      Franchise franchise = Franchise.builder().id(UUID.randomUUID()).name("Initial Name").build();
 
       // Act & Assert - Actualizar nombre
       franchise.updateName("Updated Name");

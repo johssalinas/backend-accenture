@@ -52,13 +52,14 @@ class AddProductToBranchUseCaseTest {
       String productName = "Hamburguesa Clásica";
       int stock = 50;
 
-      CreateProductRequest request = new CreateProductRequest(productName, stock, branchId);
+      CreateProductRequest request = new CreateProductRequest(branchId, productName, stock);
 
       UUID productId = UUID.randomUUID();
       Product savedProduct =
           Product.builder().id(productId).name(productName).stock(stock).branchId(branchId).build();
 
-      ProductResponse expectedResponse = new ProductResponse(productId, productName, stock);
+      ProductResponse expectedResponse =
+          new ProductResponse(productId, productName, stock, branchId);
 
       given(branchRepository.existsById(branchId)).willReturn(true);
       given(productRepository.existsByNameAndBranchId(productName, branchId)).willReturn(false);
@@ -88,7 +89,7 @@ class AddProductToBranchUseCaseTest {
       UUID branchId = UUID.randomUUID();
       String productName = "Producto Test";
 
-      CreateProductRequest request = new CreateProductRequest(productName, stock, branchId);
+      CreateProductRequest request = new CreateProductRequest(branchId, productName, stock);
 
       Product savedProduct =
           Product.builder()
@@ -99,7 +100,7 @@ class AddProductToBranchUseCaseTest {
               .build();
 
       ProductResponse expectedResponse =
-          new ProductResponse(savedProduct.getId(), productName, stock);
+          new ProductResponse(savedProduct.getId(), productName, stock, branchId);
 
       given(branchRepository.existsById(branchId)).willReturn(true);
       given(productRepository.existsByNameAndBranchId(productName, branchId)).willReturn(false);
@@ -122,7 +123,7 @@ class AddProductToBranchUseCaseTest {
       String productName = "Pizza Margarita";
       int stock = 25;
 
-      CreateProductRequest request = new CreateProductRequest(productName, stock, branchId);
+      CreateProductRequest request = new CreateProductRequest(branchId, productName, stock);
 
       Product savedProduct =
           Product.builder()
@@ -133,7 +134,7 @@ class AddProductToBranchUseCaseTest {
               .build();
 
       ProductResponse expectedResponse =
-          new ProductResponse(savedProduct.getId(), productName, stock);
+          new ProductResponse(savedProduct.getId(), productName, stock, branchId);
 
       given(branchRepository.existsById(branchId)).willReturn(true);
       given(productRepository.existsByNameAndBranchId(productName, branchId)).willReturn(false);
@@ -167,7 +168,7 @@ class AddProductToBranchUseCaseTest {
       int stock = 10;
 
       CreateProductRequest request =
-          new CreateProductRequest(productName, stock, nonExistentBranchId);
+          new CreateProductRequest(nonExistentBranchId, productName, stock);
 
       given(branchRepository.existsById(nonExistentBranchId)).willReturn(false);
 
@@ -190,7 +191,7 @@ class AddProductToBranchUseCaseTest {
       String duplicateName = "Producto Duplicado";
       int stock = 10;
 
-      CreateProductRequest request = new CreateProductRequest(duplicateName, stock, branchId);
+      CreateProductRequest request = new CreateProductRequest(branchId, duplicateName, stock);
 
       given(branchRepository.existsById(branchId)).willReturn(true);
       given(productRepository.existsByNameAndBranchId(duplicateName, branchId)).willReturn(true);
@@ -211,7 +212,7 @@ class AddProductToBranchUseCaseTest {
     void shouldNotSaveIfBranchValidationFails() {
       // Arrange
       UUID branchId = UUID.randomUUID();
-      CreateProductRequest request = new CreateProductRequest("Test Product", 10, branchId);
+      CreateProductRequest request = new CreateProductRequest(branchId, "Test Product", 10);
 
       given(branchRepository.existsById(branchId)).willReturn(false);
 
@@ -229,7 +230,7 @@ class AddProductToBranchUseCaseTest {
       // Arrange
       UUID branchId = UUID.randomUUID();
       String duplicateName = "Duplicate";
-      CreateProductRequest request = new CreateProductRequest(duplicateName, 10, branchId);
+      CreateProductRequest request = new CreateProductRequest(branchId, duplicateName, 10);
 
       given(branchRepository.existsById(branchId)).willReturn(true);
       given(productRepository.existsByNameAndBranchId(duplicateName, branchId)).willReturn(true);
@@ -254,7 +255,7 @@ class AddProductToBranchUseCaseTest {
       String productName = "Test Product";
       int stock = 10;
 
-      CreateProductRequest request = new CreateProductRequest(productName, stock, branchId);
+      CreateProductRequest request = new CreateProductRequest(branchId, productName, stock);
 
       Product savedProduct =
           Product.builder()
@@ -265,7 +266,7 @@ class AddProductToBranchUseCaseTest {
               .build();
 
       ProductResponse expectedResponse =
-          new ProductResponse(savedProduct.getId(), productName, stock);
+          new ProductResponse(savedProduct.getId(), productName, stock, branchId);
 
       given(branchRepository.existsById(branchId)).willReturn(true);
       given(productRepository.existsByNameAndBranchId(productName, branchId)).willReturn(false);
@@ -291,7 +292,7 @@ class AddProductToBranchUseCaseTest {
       String productName = "Test Product";
       int stock = 10;
 
-      CreateProductRequest request = new CreateProductRequest(productName, stock, branchId);
+      CreateProductRequest request = new CreateProductRequest(branchId, productName, stock);
 
       Product savedProduct =
           Product.builder()
@@ -302,7 +303,7 @@ class AddProductToBranchUseCaseTest {
               .build();
 
       ProductResponse expectedResponse =
-          new ProductResponse(savedProduct.getId(), productName, stock);
+          new ProductResponse(savedProduct.getId(), productName, stock, branchId);
 
       given(branchRepository.existsById(branchId)).willReturn(true);
       given(productRepository.existsByNameAndBranchId(productName, branchId)).willReturn(false);
@@ -330,8 +331,8 @@ class AddProductToBranchUseCaseTest {
       String sameProductName = "Hamburguesa Clásica";
       int stock = 10;
 
-      CreateProductRequest request1 = new CreateProductRequest(sameProductName, stock, branchId1);
-      CreateProductRequest request2 = new CreateProductRequest(sameProductName, stock, branchId2);
+      CreateProductRequest request1 = new CreateProductRequest(branchId1, sameProductName, stock);
+      CreateProductRequest request2 = new CreateProductRequest(branchId2, sameProductName, stock);
 
       Product savedProduct1 =
           Product.builder()
@@ -349,8 +350,10 @@ class AddProductToBranchUseCaseTest {
               .branchId(branchId2)
               .build();
 
-      ProductResponse response1 = new ProductResponse(savedProduct1.getId(), sameProductName, stock);
-      ProductResponse response2 = new ProductResponse(savedProduct2.getId(), sameProductName, stock);
+      ProductResponse response1 =
+          new ProductResponse(savedProduct1.getId(), sameProductName, stock, branchId1);
+      ProductResponse response2 =
+          new ProductResponse(savedProduct2.getId(), sameProductName, stock, branchId2);
 
       // Primera sucursal
       given(branchRepository.existsById(branchId1)).willReturn(true);

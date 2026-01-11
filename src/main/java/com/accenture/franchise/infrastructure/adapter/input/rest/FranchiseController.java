@@ -42,10 +42,10 @@ public class FranchiseController {
   @PostMapping
   @Operation(summary = "Crear una nueva franquicia")
   @ApiResponses({
-        @ApiResponse(responseCode = "201", description = "Franquicia creada exitosamente"),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
-        @ApiResponse(responseCode = "409", description = "Ya existe una franquicia con ese nombre")
-      })
+    @ApiResponse(responseCode = "201", description = "Franquicia creada exitosamente"),
+    @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
+    @ApiResponse(responseCode = "409", description = "Ya existe una franquicia con ese nombre")
+  })
   public ResponseEntity<FranchiseResponse> createFranchise(
       @Valid @RequestBody CreateFranchiseRequest request) {
     FranchiseResponse response = createFranchiseUseCase.execute(request);
@@ -56,9 +56,9 @@ public class FranchiseController {
   @GetMapping("/{franchiseId}")
   @Operation(summary = "Obtener una franquicia por ID")
   @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Franquicia encontrada"),
-        @ApiResponse(responseCode = "404", description = "Franquicia no encontrada")
-      })
+    @ApiResponse(responseCode = "200", description = "Franquicia encontrada"),
+    @ApiResponse(responseCode = "404", description = "Franquicia no encontrada")
+  })
   public ResponseEntity<FranchiseResponse> getFranchise(@PathVariable UUID franchiseId) {
     FranchiseResponse response = getFranchiseUseCase.execute(franchiseId);
     return ResponseEntity.ok(response);
@@ -68,10 +68,10 @@ public class FranchiseController {
   @PatchMapping("/{franchiseId}/name")
   @Operation(summary = "Actualizar el nombre de una franquicia")
   @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Nombre actualizado exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Franquicia no encontrada"),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida")
-      })
+    @ApiResponse(responseCode = "200", description = "Nombre actualizado exitosamente"),
+    @ApiResponse(responseCode = "404", description = "Franquicia no encontrada"),
+    @ApiResponse(responseCode = "400", description = "Solicitud inválida")
+  })
   public ResponseEntity<FranchiseResponse> updateFranchiseName(
       @PathVariable UUID franchiseId, @Valid @RequestBody UpdateFranchiseNameRequest request) {
     FranchiseResponse response = updateFranchiseNameUseCase.execute(franchiseId, request);
@@ -82,9 +82,9 @@ public class FranchiseController {
   @GetMapping("/{franchiseId}/top-stock-products")
   @Operation(summary = "Obtener productos con más stock por sucursal")
   @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Productos obtenidos exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Franquicia no encontrada")
-      })
+    @ApiResponse(responseCode = "200", description = "Productos obtenidos exitosamente"),
+    @ApiResponse(responseCode = "404", description = "Franquicia no encontrada")
+  })
   public ResponseEntity<List<ProductStockResponse>> getTopStockProducts(
       @PathVariable UUID franchiseId) {
     List<ProductStockResponse> response =

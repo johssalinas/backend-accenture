@@ -35,13 +35,13 @@ public class BranchController {
   @PostMapping
   @Operation(summary = "Agregar una nueva sucursal a una franquicia")
   @ApiResponses({
-        @ApiResponse(responseCode = "201", description = "Sucursal creada exitosamente"),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
-        @ApiResponse(responseCode = "404", description = "Franquicia no encontrada"),
-        @ApiResponse(
-            responseCode = "409",
-            description = "Ya existe una sucursal con ese nombre en la franquicia")
-      })
+    @ApiResponse(responseCode = "201", description = "Sucursal creada exitosamente"),
+    @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
+    @ApiResponse(responseCode = "404", description = "Franquicia no encontrada"),
+    @ApiResponse(
+        responseCode = "409",
+        description = "Ya existe una sucursal con ese nombre en la franquicia")
+  })
   public ResponseEntity<BranchResponse> addBranch(@Valid @RequestBody CreateBranchRequest request) {
     BranchResponse response = addBranchToFranchiseUseCase.execute(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -51,10 +51,10 @@ public class BranchController {
   @PatchMapping("/{branchId}/name")
   @Operation(summary = "Actualizar el nombre de una sucursal")
   @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Nombre actualizado exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Sucursal no encontrada"),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida")
-      })
+    @ApiResponse(responseCode = "200", description = "Nombre actualizado exitosamente"),
+    @ApiResponse(responseCode = "404", description = "Sucursal no encontrada"),
+    @ApiResponse(responseCode = "400", description = "Solicitud inválida")
+  })
   public ResponseEntity<BranchResponse> updateBranchName(
       @PathVariable UUID branchId, @Valid @RequestBody UpdateBranchNameRequest request) {
     BranchResponse response = updateBranchNameUseCase.execute(branchId, request);

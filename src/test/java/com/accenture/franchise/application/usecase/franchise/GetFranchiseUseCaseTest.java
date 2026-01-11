@@ -44,7 +44,11 @@ class GetFranchiseUseCaseTest {
       String franchiseName = "McDonald's";
 
       Franchise franchise =
-          Franchise.builder().id(franchiseId).name(franchiseName).branches(new ArrayList<>()).build();
+          Franchise.builder()
+              .id(franchiseId)
+              .name(franchiseName)
+              .branches(new ArrayList<>())
+              .build();
 
       FranchiseResponse expectedResponse =
           new FranchiseResponse(franchiseId, franchiseName, new ArrayList<>());
@@ -73,7 +77,11 @@ class GetFranchiseUseCaseTest {
       String franchiseName = "Starbucks";
 
       Franchise franchise =
-          Franchise.builder().id(franchiseId).name(franchiseName).branches(new ArrayList<>()).build();
+          Franchise.builder()
+              .id(franchiseId)
+              .name(franchiseName)
+              .branches(new ArrayList<>())
+              .build();
 
       FranchiseResponse expectedResponse =
           new FranchiseResponse(franchiseId, franchiseName, new ArrayList<>());
@@ -166,7 +174,8 @@ class GetFranchiseUseCaseTest {
           .isInstanceOf(EntityNotFoundException.class);
 
       verify(franchiseRepository).findById(nonExistentId);
-      verify(mapper, org.mockito.Mockito.never()).toFranchiseResponse(org.mockito.ArgumentMatchers.any());
+      verify(mapper, org.mockito.Mockito.never())
+          .toFranchiseResponse(org.mockito.ArgumentMatchers.any());
     }
   }
 

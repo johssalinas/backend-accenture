@@ -86,11 +86,7 @@ class UpdateFranchiseNameUseCaseTest {
       String newName = "  New Name  ";
 
       Franchise franchise =
-          Franchise.builder()
-              .id(franchiseId)
-              .name("Old Name")
-              .branches(new ArrayList<>())
-              .build();
+          Franchise.builder().id(franchiseId).name("Old Name").branches(new ArrayList<>()).build();
 
       UpdateFranchiseNameRequest request = new UpdateFranchiseNameRequest(newName);
 
@@ -116,11 +112,7 @@ class UpdateFranchiseNameUseCaseTest {
       String newName = "Updated Name";
 
       Franchise franchise =
-          Franchise.builder()
-              .id(franchiseId)
-              .name("Old Name")
-              .branches(new ArrayList<>())
-              .build();
+          Franchise.builder().id(franchiseId).name("Old Name").branches(new ArrayList<>()).build();
 
       UpdateFranchiseNameRequest request = new UpdateFranchiseNameRequest(newName);
 
@@ -233,11 +225,7 @@ class UpdateFranchiseNameUseCaseTest {
       String newName = "Updated Name";
 
       Franchise franchise =
-          Franchise.builder()
-              .id(franchiseId)
-              .name("Old Name")
-              .branches(new ArrayList<>())
-              .build();
+          Franchise.builder().id(franchiseId).name("Old Name").branches(new ArrayList<>()).build();
 
       UpdateFranchiseNameRequest request = new UpdateFranchiseNameRequest(newName);
 
@@ -268,11 +256,7 @@ class UpdateFranchiseNameUseCaseTest {
       String newName = "Updated Name";
 
       Franchise franchise =
-          Franchise.builder()
-              .id(franchiseId)
-              .name("Old Name")
-              .branches(new ArrayList<>())
-              .build();
+          Franchise.builder().id(franchiseId).name("Old Name").branches(new ArrayList<>()).build();
 
       UpdateFranchiseNameRequest request = new UpdateFranchiseNameRequest(newName);
 

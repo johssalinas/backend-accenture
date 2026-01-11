@@ -41,13 +41,13 @@ public class ProductController {
   @PostMapping
   @Operation(summary = "Agregar un nuevo producto a una sucursal")
   @ApiResponses({
-        @ApiResponse(responseCode = "201", description = "Producto creado exitosamente"),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
-        @ApiResponse(responseCode = "404", description = "Sucursal no encontrada"),
-        @ApiResponse(
-            responseCode = "409",
-            description = "Ya existe un producto con ese nombre en la sucursal")
-      })
+    @ApiResponse(responseCode = "201", description = "Producto creado exitosamente"),
+    @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
+    @ApiResponse(responseCode = "404", description = "Sucursal no encontrada"),
+    @ApiResponse(
+        responseCode = "409",
+        description = "Ya existe un producto con ese nombre en la sucursal")
+  })
   public ResponseEntity<ProductResponse> addProduct(
       @Valid @RequestBody CreateProductRequest request) {
     ProductResponse response = addProductToBranchUseCase.execute(request);
@@ -58,9 +58,9 @@ public class ProductController {
   @DeleteMapping("/{productId}")
   @Operation(summary = "Eliminar un producto de una sucursal")
   @ApiResponses({
-        @ApiResponse(responseCode = "204", description = "Producto eliminado exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Producto no encontrado")
-      })
+    @ApiResponse(responseCode = "204", description = "Producto eliminado exitosamente"),
+    @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+  })
   public ResponseEntity<Void> removeProduct(@PathVariable UUID productId) {
     removeProductFromBranchUseCase.execute(productId);
     return ResponseEntity.noContent().build();
@@ -70,10 +70,10 @@ public class ProductController {
   @PatchMapping("/{productId}/stock")
   @Operation(summary = "Actualizar el stock de un producto")
   @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Stock actualizado exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Producto no encontrado"),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida")
-      })
+    @ApiResponse(responseCode = "200", description = "Stock actualizado exitosamente"),
+    @ApiResponse(responseCode = "404", description = "Producto no encontrado"),
+    @ApiResponse(responseCode = "400", description = "Solicitud inválida")
+  })
   public ResponseEntity<ProductResponse> updateProductStock(
       @PathVariable UUID productId, @Valid @RequestBody UpdateProductStockRequest request) {
     ProductResponse response = updateProductStockUseCase.execute(productId, request);
@@ -84,10 +84,10 @@ public class ProductController {
   @PatchMapping("/{productId}/name")
   @Operation(summary = "Actualizar el nombre de un producto")
   @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Nombre actualizado exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Producto no encontrado"),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida")
-      })
+    @ApiResponse(responseCode = "200", description = "Nombre actualizado exitosamente"),
+    @ApiResponse(responseCode = "404", description = "Producto no encontrado"),
+    @ApiResponse(responseCode = "400", description = "Solicitud inválida")
+  })
   public ResponseEntity<ProductResponse> updateProductName(
       @PathVariable UUID productId, @Valid @RequestBody UpdateProductNameRequest request) {
     ProductResponse response = updateProductNameUseCase.execute(productId, request);
