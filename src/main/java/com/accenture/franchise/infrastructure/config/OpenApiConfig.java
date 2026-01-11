@@ -25,7 +25,7 @@ public class OpenApiConfig {
             new Info()
                 .title("API de Gestión de Franquicias")
                 .description("API REST para gestión de franquicias, sucursales y productos")
-                .version("0.1.0")
+                .version("1.0.0")
                 .contact(new Contact().name("Johs Salinas").email("johssalinas2work@gmail.com"))
                 .license(
                     new License().name("Licencia MIT").url("https://opensource.org/licenses/MIT")))
