@@ -33,8 +33,7 @@ public class OpenApiConfig {
             List.of(
                 new Server().url("http://localhost:8080").description("Servidor de Desarrollo"),
                 new Server()
-                    .url(
-                        "http://franchise-api-alb-2042942561.us-east-2.elb.amazonaws.com")
+                    .url("http://franchise-api-alb-2042942561.us-east-2.elb.amazonaws.com")
                     .description("Servidor de Producción")));
   }
 }
