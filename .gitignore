@@ -32,4 +32,24 @@ build/
 ### VS Code ###
 .vscode/
 
+### Environment Variables & Secrets ###
 .env
+.env.local
+.env.*.local
+
+### AWS Credentials ###
+.aws/credentials
+*.pem
+*.key
+
+### Terraform ###
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform/
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json

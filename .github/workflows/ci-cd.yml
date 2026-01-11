@@ -8,7 +8,7 @@ on:
 
 env:
   JAVA_VERSION: '25'
-  AWS_REGION: us-east-1
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-2' }}
 
 jobs:
   build-and-test:
@@ -145,7 +145,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
       
-      - name: Deploy notification
+      - name: Update ECS Service
         run: |
-          echo "Deployment would happen here"
-          echo "Image: ${{ secrets.ECR_REGISTRY }}/franchise-api:${{ github.sha }}"
+          aws ecs update-service \
+            --cluster ${{ vars.ECS_CLUSTER }} \
+            --service ${{ vars.ECS_SERVICE }} \
+            --force-new-deployment \
+            --region ${{ env.AWS_REGION }}
+          
+          echo "✅ Deployment initiated successfully"
+          echo "🐳 Image: ${{ secrets.ECR_REGISTRY }}/franchise-api:${{ github.sha }}"
+          echo "🌐 Cluster: ${{ vars.ECS_CLUSTER }}"
+          echo "📦 Service: ${{ vars.ECS_SERVICE }}"

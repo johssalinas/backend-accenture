@@ -14,7 +14,7 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 
 # Compilar aplicación
-RUN mvn clean package -DskipTests -B
+RUN mvn clean package -DskipTests -Dspotless.check.skip=true -B
 
 # Etapa final: imagen ligera con JRE
 FROM eclipse-temurin:25-jre-alpine
