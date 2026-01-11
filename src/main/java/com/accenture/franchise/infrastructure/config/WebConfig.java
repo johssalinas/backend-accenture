@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
         .allowedHeaders("*")
         .maxAge(3600);
-    
+
     // CORS para Swagger UI y documentación OpenAPI
     registry
         .addMapping("/swagger-ui/**")
@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
         .allowedHeaders("*")
         .maxAge(3600);
-    
+
     registry
         .addMapping("/v3/api-docs/**")
         .allowedOrigins("*")
