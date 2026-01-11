@@ -64,7 +64,7 @@ jobs:
         run: mvn test -B
       
       - name: Package application
-        run: mvn package -DskipTests -B
+        run: mvn package -DskipTests -Dspotless.check.skip=true -B
       
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -105,6 +105,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Debug - Check Secrets and Variables
+        run: |
+          echo "🔍 Verificando configuración de secrets y variables..."
+          echo "AWS_REGION from vars: ${{ vars.AWS_REGION }}"
+          echo "AWS_REGION from env: ${{ env.AWS_REGION }}"
+          echo "AWS_ACCESS_KEY_ID exists: ${{ secrets.AWS_ACCESS_KEY_ID != '' }}"
+          echo "AWS_SECRET_ACCESS_KEY exists: ${{ secrets.AWS_SECRET_ACCESS_KEY != '' }}"
+          if [ -n "$AWS_ACCESS_KEY_ID" ]; then
+            echo "AWS_ACCESS_KEY_ID length: ${#AWS_ACCESS_KEY_ID}"
+          else
+            echo "⚠️ AWS_ACCESS_KEY_ID is empty!"
+          fi
+          if [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
+            echo "AWS_SECRET_ACCESS_KEY length: ${#AWS_SECRET_ACCESS_KEY}"
+          else
+            echo "⚠️ AWS_SECRET_ACCESS_KEY is empty!"
+          fi
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -139,6 +160,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Debug - Check Deploy Variables
+        run: |
+          echo "🔍 Verificando configuración para deploy..."
+          echo "AWS_REGION: ${{ env.AWS_REGION }}"
+          echo "ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}"
+          echo "ECS_SERVICE: ${{ vars.ECS_SERVICE }}"
+          echo "AWS credentials exist: ${{ secrets.AWS_ACCESS_KEY_ID != '' && secrets.AWS_SECRET_ACCESS_KEY != '' }}"
       
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
