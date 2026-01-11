@@ -26,11 +26,21 @@ public class DtoMapper {
         franchise.getId(),
         franchise.getName(),
         franchise.getBranches() != null && !franchise.getBranches().isEmpty()
-            ? franchise.getBranches().stream().map(this::toBranchResponse).toList()
+            ? franchise.getBranches().stream().map(this::toBranchResponseWithoutProducts).toList()
             : null);
   }
 
-  /** Convierte una sucursal de dominio a su DTO de respuesta. */
+  /** Convierte una sucursal de dominio a su DTO de respuesta SIN productos (para listados). */
+  public BranchResponse toBranchResponseWithoutProducts(Branch branch) {
+    if (branch == null) {
+      return null;
+    }
+
+    return new BranchResponse(
+        branch.getId(), branch.getName(), branch.getFranchiseId(), Collections.emptyList());
+  }
+
+  /** Convierte una sucursal de dominio a su DTO de respuesta CON productos (para detalle). */
   public BranchResponse toBranchResponse(Branch branch) {
     if (branch == null) {
       return null;

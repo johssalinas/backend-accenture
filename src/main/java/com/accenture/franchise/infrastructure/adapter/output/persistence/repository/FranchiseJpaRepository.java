@@ -15,10 +15,7 @@ public interface FranchiseJpaRepository extends JpaRepository<FranchiseEntity, U
   /** Verifica si existe una franquicia con el nombre indicado. */
   boolean existsByName(String name);
 
-  /** Busca una franquicia por ID con sus sucursales y productos cargados. */
-  @Query(
-      "SELECT f FROM FranchiseEntity f "
-          + "LEFT JOIN FETCH f.branches b LEFT JOIN FETCH b.products "
-          + "WHERE f.id = :id")
+  /** Busca una franquicia por ID con sus sucursales cargadas. */
+  @Query("SELECT f FROM FranchiseEntity f LEFT JOIN FETCH f.branches WHERE f.id = :id")
   Optional<FranchiseEntity> findByIdWithBranchesAndProducts(@Param("id") UUID id);
 }
